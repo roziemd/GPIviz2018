@@ -1,0 +1,477 @@
+{
+
+  "ranking_values": {
+
+    "2016": [
+
+      {
+
+        "id": "New Zealand",
+
+        "value": 98.713
+
+      },
+
+      {
+
+        "id": "Japan",
+
+        "value": 98.605
+
+      },
+
+      {
+
+        "id": "Australia",
+
+        "value": 98.535
+
+      },
+
+      {
+
+        "id": "Singapore",
+
+        "value": 98.465
+
+      },
+
+      {
+
+        "id": "Malaysia",
+
+        "value": 98.352
+
+      },
+
+      {
+
+        "id": "Taiwan",
+
+        "value": 98.213
+
+      },
+
+      {
+
+        "id": "Indonesia",
+
+        "value": 98.201
+
+      },
+
+      {
+
+        "id": "Mongolia",
+
+        "value": 98.162
+
+      },
+
+      {
+
+        "id": "Laos",
+
+        "value": 98.148
+
+      },
+
+      {
+
+        "id": "South Korea",
+
+        "value": 98.142
+
+      },
+
+      {
+
+        "id": "Timor-Leste",
+
+        "value": 98.121
+
+      },
+
+      {
+
+        "id": "Vietnam",
+
+        "value": 98.094
+
+      },
+
+      {
+
+        "id": "Papua New Guinea",
+
+        "value": 97.857
+
+      },
+
+      {
+
+        "id": "Cambodia",
+
+        "value": 97.839
+
+      },
+	  
+	  {
+
+        "id": "Myanmar",
+
+        "value": 97.744
+
+      },
+	  
+	  {
+
+        "id": "China",
+
+        "value": 97.712
+
+      },
+	  
+	  {
+
+        "id": "Thailand",
+
+        "value": 97.688
+
+      },
+	  
+	  {
+
+        "id": "Philippines",
+
+        "value": 97.489
+
+      },
+	  
+	  {
+
+        "id": "North Korea",
+
+        "value": 97.056
+
+      }
+
+    ],
+
+    "2017": [
+
+      {
+
+        "id": "New Zealand",
+
+        "value": 98.808
+
+      },
+
+      {
+
+        "id": "Singapore",
+
+        "value": 98.618
+
+      },
+
+      {
+
+        "id": "Japan",
+
+        "value": 98.609
+
+      },
+
+      {
+
+        "id": "Australia",
+
+        "value": 98.565
+
+      },
+
+      {
+
+        "id": "Malaysia",
+
+        "value": 98.381
+
+      },
+
+      {
+
+        "id": "Taiwan",
+
+        "value": 98.264
+
+      },
+
+      {
+
+        "id": "Laos",
+
+        "value": 98.179
+
+      },
+
+      {
+
+        "id": "Mongolia",
+
+        "value": 98.179
+
+      },
+
+      {
+
+        "id": "South Korea",
+
+        "value": 98.177
+
+      },
+	  
+	  {
+
+        "id": "Indonesia",
+
+        "value": 98.147
+
+      },
+
+      {
+
+        "id": "Timor-Leste",
+
+        "value": 98.105
+
+      },
+
+      {
+
+        "id": "Vietnam",
+
+        "value": 98.095
+
+      },
+
+      {
+
+        "id": "Cambodia",
+
+        "value": 97.899
+
+      },
+
+
+      {
+
+        "id": "Papua New Guinea",
+
+        "value": 97.891
+
+      },
+	  
+	  {
+
+        "id": "China",
+
+        "value": 97.757
+
+      },
+	  
+	  {
+
+        "id": "Thailand",
+
+        "value": 97.741
+
+      },
+	  
+	  {
+
+        "id": "Myanmar",
+
+        "value": 97.698
+
+      },
+	  
+	  {
+
+        "id": "Philippines",
+
+        "value": 97.488
+
+      },
+	  
+	  {
+
+        "id": "North Korea",
+
+        "value": 97.05
+
+
+      }
+
+    ],
+
+    "2018": [
+
+      {
+
+        "id": "New Zealand",
+
+        "value": 98.808
+
+      },
+
+      {
+
+        "id": "Singapore",
+
+        "value": 98.618
+
+      },
+
+      {
+
+        "id": "Japan",
+
+        "value": 98.609
+
+      },
+
+      {
+
+        "id": "Australia",
+
+        "value": 98.565
+
+      },
+
+      {
+
+        "id": "Malaysia",
+
+        "value": 98.381
+
+      },
+
+      {
+
+        "id": "Taiwan",
+
+        "value": 98.264
+
+      },
+
+      {
+
+        "id": "Laos",
+
+        "value": 98.719
+
+      },
+
+      {
+
+        "id": "Mongolia",
+
+        "value": 98.719
+
+      },
+
+      {
+
+        "id": "South Korea",
+
+        "value": 98.177
+
+      },
+
+      {
+
+        "id": "Indonesia",
+
+        "value": 98.147
+
+      },
+
+      {
+
+        "id": "Timor-Leste",
+
+        "value": 98.105
+
+      },
+
+      {
+
+        "id": "Vietnam",
+
+        "value": 98.095
+
+      },
+
+      {
+
+        "id": "Cambodia",
+
+        "value": 97.899
+
+      },
+
+      {
+
+        "id": "Papua New Guinea",
+
+        "value": 97.891
+
+      },
+	  
+	  {
+
+        "id": "China",
+
+        "value": 97.757
+
+      },
+	  
+	  {
+
+        "id": "Thailand",
+
+        "value": 97.741
+
+      },
+	  
+	  {
+
+        "id": "Myanmar",
+
+        "value": 97.698
+
+      },
+	  
+	  {
+
+        "id": "Philippines",
+
+        "value": 97.488
+
+      },
+	  
+	  {
+
+        "id": "North Korea",
+
+        "value": 97.05
+
+      }
+
+    ]
+
+  }
+
+}

@@ -1,0 +1,20 @@
+RegionalRank,name, OverallScore, Scorechange, OverallRank,code,Safety & Security,Militarisation,Ongoing Conflict
+1,New Zealand,1.192,-0.022,2,NZL,1.4,1.3,1
+2,Singapore,1.382,-0.018,8,SGP,1.6,2.2,1
+3,Japan,1.391,0.014,9,JPN,1.4,1.4,1.4
+4,Australia,1.435,0.024,13,AUS,1.6,1.6,1.1
+5,Malaysia,1.619,-0.028,25,MAS,2.3,1.4,1.1
+6,Taiwan,1.736,0.008,34,TWN,1.9,1.9,1.6
+7,Laos,1.821,0.022,46,LAO,2.2,1.7,1.4
+7,Mongolia,1.821,0.02,46,MNE,2.4,1.5,1.2
+9,South Korea,1.823,0.03,49,KOR,1.7,2,1.8
+10,Indonesia,1.853,0.008,55,IDN,2.3,1.4,1.6
+11,Timor-Leste,1.895,0.023,59,TLS,2.5,1.5,1.4
+12,Vietnam,1.905,-0.005,60,VNM,2.2,2.1,1.4
+13,Cambodia,2.101,0.09,96,KHM,2.6,2,1.4
+14,Papua New Guinea,2.109,0.014,100,PNG,2.8,1.8,1.4
+15,China,2.243,-0.008,112,CHN,2.5,2,1.9
+16,Thailand,2.259,-0.01,113,THA,2.9,1.5,2.1
+17,Myanmar,2.302,0.119,122,MMR,2.4,1.7,2.4
+18,Philippines,2.512,-0.012,137,PHL,3,1.6,2.8
+19,North Korea,2.95,-0.014,150,PRK,3.1,3.2,2.6

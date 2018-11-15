@@ -1,0 +1,402 @@
+[  
+  {  
+    "key":"New Zealand",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"New Zealand",
+        "value":1.4
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"New Zealand",
+        "value":1.3
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"New Zealand",
+        "value":1
+      }
+    ]
+  },
+  {  
+    "key":"Singapore",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Singapore",
+        "value":1.6
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Singapore",
+        "value":2.2
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Singapore",
+        "value":1
+      }
+    ]
+  },
+  {  
+    "key":"Japan",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Japan",
+        "value":1.4
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Japan",
+        "value":1.4
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Japan",
+        "value":1.4
+      }
+    ]
+  },
+  {  
+    "key":"Australia",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Australia",
+        "value":1.6
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Australia",
+        "value":1.6
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Australia",
+        "value":1.1
+      }
+    ]
+  },
+  {  
+    "key":"Malaysia",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Malaysia",
+        "value":2.3
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Malaysia",
+        "value":1.4
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Malaysia",
+        "value":1.1
+      }
+    ]
+  },
+  {  
+    "key":"Taiwan",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Taiwan",
+        "value":1.9
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Taiwan",
+        "value":1.9
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Taiwan",
+        "value":1.6
+      }
+    ]
+  },
+  {  
+    "key":"Laos",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Laos",
+        "value":2.2
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Laos",
+        "value":1.7
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Laos",
+        "value":1.4
+      }
+    ]
+  },
+  {  
+    "key":"Mongolia",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Mongolia",
+        "value":2.4
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Mongolia",
+        "value":1.5
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Mongolia",
+        "value":1.2
+      }
+    ]
+  },
+  {  
+    "key":"South Korea",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"South Korea",
+        "value":1.7
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"South Korea",
+        "value":2
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"South Korea",
+        "value":1.8
+      }
+    ]
+  },
+  {  
+    "key":"Indonesia",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Indonesia",
+        "value":2.3
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Indonesia",
+        "value":1.4
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Indonesia",
+        "value":1.6
+      }
+    ]
+  },
+  {  
+    "key":"Timor-Leste",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Timor-Leste",
+        "value":2.5
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Timor-Leste",
+        "value":1.5
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Timor-Leste",
+        "value":1.4
+      }
+    ]
+  },
+  {  
+    "key":"Vietnam",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Vietnam",
+        "value":2.2
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Vietnam",
+        "value":2.1
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Vietnam",
+        "value":1.4
+      }
+    ]
+  },
+  {  
+    "key":"Cambodia",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Cambodia",
+        "value":2.6
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Cambodia",
+        "value":2
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Cambodia",
+        "value":1.4
+      }
+    ]
+  },
+  {  
+    "key":"Papua New Guinea",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Papua New Guinea",
+        "value":2.8
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Papua New Guinea",
+        "value":1.8
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Papua New Guinea",
+        "value":1.4
+      }
+    ]
+  },
+  {  
+    "key":"China",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"China",
+        "value":2.5
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"China",
+        "value":2
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"China",
+        "value":1.9
+      }
+    ]
+  },
+  {  
+    "key":"Thailand",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Thailand",
+        "value":2.9
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Thailand",
+        "value":1.5
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Thailand",
+        "value":2.1
+      }
+    ]
+  },
+  {  
+    "key":"Myanmar",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Myanmar",
+        "value":2.4
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Myanmar",
+        "value":1.7
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Myanmar",
+        "value":2.4
+      }
+    ]
+  },
+  {  
+    "key":"Philippines",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"Philippines",
+        "value":3
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"Philippines",
+        "value":1.6
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"Philippines",
+        "value":2.8
+      }
+    ]
+  },
+  {  
+    "key":"North Korea",
+    "values":[  
+      {  
+        "reason":"Safety & Security",
+        "device":"North Korea",
+        "value":3.1
+        
+      },
+      {  
+        "reason":"Militarisation",
+        "device":"North Korea",
+        "value":3.2
+      },
+      {  
+        "reason":"Ongoing Conflict",
+        "device":"North Korea",
+        "value":2.6
+      }
+    ]
+  }
+
+]

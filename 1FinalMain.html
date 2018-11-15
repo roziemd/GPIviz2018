@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html ng-app="RadarChart">
+
+<head>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Peace Index 2018</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" />
+
+  <!-- Google fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" />
+	<link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+
+	<!-- D3.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.3.0/d3-legend.js" charset="utf-8"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" />
+		<script src="liquidFillGauge.js" language="JavaScript"></script>
+
+  <style>
+
+		* {
+				box-sizing: border-box;
+				}
+
+
+		body {
+		  font-family: "Open Sans", sans-serif;
+		  font-size: 12px;
+		  font-weight: 400;
+		  padding-top: 10px;
+		color: black;
+		  padding-bottom: 100px;
+		  fill: #242424;
+			text-align: center;
+			cursor: default;
+		line-height: 30px;
+		
+		background-repeat: no-repeat;
+		background-size: 1170px 350px;
+		 background-position: center top; 
+		 
+		}
+
+
+		html {
+		  overflow-y: scroll;
+		}
+
+		/* Dashed red border */
+			hr.new2 {
+			border-top: 1px dashed gray;
+			}
+
+		p::first-letter {
+		color: steelblue;
+		font-size: xx-large;
+		font-family: 'Merriweather', serif;
+		}
+
+		h1 {
+		  color: black;
+		  font-weight: 800;
+		  font-size: 1.7em;
+		}
+		h2 {
+		  color: steelblue;
+		  font-size: 1.3em;
+		  padding-bottom: 10px;
+		}
+		h3 {
+		  color: black;
+		  font-size: 1.2em;
+      padding-bottom: 20px;
+      padding-left: 15px;
+      padding-right: 15px;
+		}
+    h4 {
+      color: white;
+      font-size: 1.2em;
+      padding: 10px;
+    }
+    h5 {
+		  color: black;
+		  font-size: 1.6em;
+		  padding-top: 20px;
+		}
+    h6 {
+      color: grey;
+      font-size: 1.2em;
+    }
+    h7 {
+      color: black;
+      font-size: 1.1em;
+    }
+		pre {
+		  height: 200px;
+		  font-size: 9px;
+		  overflow-y: scroll;
+		}
+		.form-control-inline {
+		  display: inline;
+		  width: 40px;
+		  margin-right: 5px;
+		}
+		.visualization {
+		}
+		.configuration {
+		  font-size: 0.7em;
+		  width: 300px;
+		  border: 2px solid #000000;
+		  padding-left: 20px;
+		  margin-bottom: 20px;
+      background-color: white;
+		}
+		.checkbox {
+		  margin-left: 20px;
+		}
+
+		.liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
+		
+		@media only screen and (max-width:1980px) {
+		/* For mobile phones: */
+		.body {
+		width:100%;
+			}
+		}
+
+
+
+		<!-- Customizable classes used in D3 vis, uncomment to customize -->
+		.svg-vis {
+		  background-color: gray;
+		  opacity: 0.5;
+		}
+		.verticesTooltip {
+		  position: absolute;
+		  color: red;
+		  font-size: 12px;
+		  width: 100px;
+		  height: auto;
+		  padding: 5px;
+		  border: 2px solid gray;
+		  border-radius: 5px;
+		  pointer-events: none;
+		  opacity: 0;
+		  background: #f4f4f;
+		}
+		.level-lines {
+		  stroke: #D3D3D3;
+		  stroke-width: 1px;
+		}
+		.level-labels {
+		  fill: gray;
+		  font-size: 8px;
+		}
+		.axis-lines {
+		  stroke: #D3D3D3;
+		  stroke-width: 1px;
+		}
+		.axis-labels {
+		  fill: #708090;
+		  font-size: 10px;
+		}
+		.polygon-vertices {
+		  fill-opacity: 0.6;
+		}
+		.polygon-areas {
+		  fill-opacity: 0.6;
+		}
+		.legend-tiles {
+		  fill-opacity: 0.3;
+		}
+		.legend-labels {
+		  font-size: 12px;
+		}
+
+		/* Create two equal columns that floats next to each other */
+		.column {
+			float: left;
+			width: 50%;
+			padding: 20px;
+			height: 650px;
+			color: white; /* Should be removed. Only for demonstration */
+		}
+
+		/* Clear floats after the columns */
+		.row:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+		.circle {
+			width: 370px;
+			height: 370px;
+			border-radius: 50%;
+			border: 2px solid black;
+			font-size: 18px;
+			color: black;
+			line-height: 30px;
+			word-wrap: break-word;
+		}
+	</style>
+</head>
+
+<body>
+		<!-- Text on the GPI -->
+
+<br>
+    <font size="7" color="steelblue" weight="800"><b>New Zealand remains Asia-Pacific’s most peaceful country in 2018 for the 3<sup>rd</sup> year in a row</b></font>
+
+
+
+		<hr class="new2">
+    <h6 style="text-align:right;"><i>Special Report by GeoGazers
+		<br><SCRIPT LANGUAGE="Javascript">
+		<!--
+
+		// Array of day names
+		var dayNames = new Array("Sun","Mon","Tue","Wed",
+						"Thu","Fri","Sat");
+
+		// Array of month Names
+		var monthNames = new Array(
+		"January","February","March","April","May","June","July",
+		"August","September","October","November","December");
+
+		var now = new Date();
+		document.write(dayNames[now.getDay()] + ", " +
+		now.getDate() + " " + monthNames[now.getMonth()] + " " + now.getFullYear());
+
+		// -->
+		</SCRIPT></i></h6>
+
+		<br>
+		<p><font size="4"><i>New Zealand was rated the most peaceful country in Asia-Pacific, according to the <a href="http://visionofhumanity.org/app/uploads/2018/06/Global-Peace-Index-2018-2.pdf" target="_blank">2018 Global Peace Index (GPI)</a> measured by the Institute for Economics & Peace.
+		It was accorded a score of 1.192, with lower scores indicating a more peaceful society.	In fact, it is 2nd only to Iceland which was rated the most peaceful country in the world.
+		The top three most peaceful countries in Asia Pacific are New Zealand, Singapore and Japan. (See the full Asia-Pacific ranks <a href="2rankChart.html">here</a>.)</i></font></p>
+
+		<br>
+
+		<!--Radar Chart portion -->
+			<body class="container" ng-controller="MainCtrl as radar">
+
+
+
+		  <!-- header -->
+		  <header class="page-header">
+		  <br><br>
+			<font size="7" color="steelblue">What Does the GPI Measure? <br></font>
+			<h3 class="text-small">The GPI comprises three main domains. These domains have a total of 23 qualitative and quantitative indicators measuring the state of peace. </h3>
+
+
+  </header>
+
+  <div class="circle" style="float:left; margin-right: 10px; margin-bottom: 100px; background-color: LightSteelBlue"><br><h1>Societal Safety & Security</h1><br>measures the level of harmony or discord within a nation, using ten indicators including crime rates, terrorist activity<br> and violent demonstrations, and the<br> stability of the political scene.</div>
+  <div class="circle" style="float:left; margin-right: 10px; margin-bottom: 100px; background-color: coral;"><br><h1>Ongoing Domestic<br> and International Conflict</h1>is defined by number of deaths incurred from external and internal conflicts, level of organised internal conflict and relations with neighbouring countries.</div>
+  <div class="circle" style="float:left; margin-right: 10px; margin-bottom: 100px; background-color: LightCyan;"><br><h1>Degree of<br> Militarisation</h1><br>includes military expenditure, armed personnel per 100,000 inhabitants, UN deployments and other indicators of military capabilities.</div>
+
+
+
+
+<font size="6" color="steelblue"><b>Interactive GPI Chart</b></font>
+
+<br>
+<br>
+<br>
+	<!-- main content -->
+	<div class="main container">
+
+
+
+    <!-- visualization -->
+    <div class="visualization col-xs-7">
+      <h6>Select Country:
+        <select ng-options="example for example in radar.examples" ng-model="radar.exampleSelected" ng-change="radar.selectExample(radar.exampleSelected)"></select>
+      </h6>
+      <div class="visualization">
+        <radar csv="radar.csv" config="radar.config"></radar>
+      </div>
+    </div>
+
+
+    <!-- configuration -->
+    <div class="configuration col-xs-5">
+      <form>
+        <h6><b>Choose Your View:</b></h6>
+          <div class="form-group">
+          <label>Levels:</label>
+          <input type="number" class="form-control-inline" step="1" ng-model="radar.config.levels" />
+        </div>
+        <div class="form-group">
+          <label>Padding Scale:</label>
+          <input type="number" class="form-control-inline" step="0.1" ng-model="radar.config.facetPaddingScale" />
+        </div>
+        <div class="form-group">
+          <label>Label Scale:</label>
+          <input type="number" class="form-control-inline" step="0.1" ng-model="radar.config.labelScale" />
+        </div>
+        <div class="form-group">
+          <label class="checkbox"><input type="checkbox" ng-model="radar.config.facet" /><span class="text-primary">Facet Plot</span></label>
+          <label class="checkbox"><input type="checkbox" ng-model="radar.config.showLevelsLabels" />Levels Labels</label>
+			</div>
+		</form>
+		</div>
+	</div>
+
+
+
+  <!-- scripts -->
+  <script src="http://code.angularjs.org/1.3.5/angular.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="app.js"></script>
+  <script src="radar.js"></script>
+  <script src="radarDraw.js"></script>
+  <script>
+    // Hack to make this example display correctly in an iframe on bl.ocks.org
+    d3.select(self.frameElement).style("height", "1000px");
+  </script>
+
+  <script>
+  (function() {
+  angular.module("RadarChart", [])
+    .directive("radar", radar)
+    .directive("onReadFile", onReadFile)
+    .controller("MainCtrl", MainCtrl);
+
+  // controller function MainCtrl
+  function MainCtrl($http) {
+    var ctrl = this;
+    init();
+
+
+    // function init
+    function init() {
+      // initialize controller variables
+      ctrl.examples = [
+		"All Asia-Pac Countries 2017",
+		"All Asia-Pac Countries 2018",
+		"New Zealand (2017)",
+		"Singapore (2017)",
+		"Japan (2017)",
+		"Australia (2017)",
+		"Malaysia (2017)",
+		"Taiwan (2017)",
+		"Laos (2017)",
+		"Mongolia (2017)",
+		"South Korea (2017)",
+		"Indonesia (2017)",
+		"Timor-Leste (2017)",
+		"Vietnam (2017)",
+		"Cambodia (2017)",
+		"Papua New Guinea (2017)",
+		"China (2017)",
+		"Thailand (2017)",
+		"Myanmar (2017)",
+		"Philippines (2017)",
+		"North Korea (2017)",
+		"New Zealand (2018)",
+		"Singapore (2018)",
+		"Japan (2018)",
+		"Australia (2018)",
+		"Malaysia (2018)",
+		"Taiwan (2018)",
+		"Laos (2018)",
+		"Mongolia (2018)",
+		"South Korea (2018)",
+		"Indonesia (2018)",
+		"Timor-Leste (2018)",
+		"Vietnam (2018)",
+		"Cambodia (2018)",
+		"Papua New Guinea (2018)",
+		"China (2018)",
+		"Thailand (2018)",
+		"Myanmar (2018)",
+		"Philippines (2018)",
+		"North Korea (2018)"
+      ];
+      ctrl.exampleSelected = ctrl.examples[0];
+      ctrl.getData = getData;
+      ctrl.selectExample = selectExample;
+
+      // initialize controller functions
+      ctrl.selectExample(ctrl.exampleSelected);
+      ctrl.config = {
+        w: 250,
+        h: 250,
+        facet: false,
+        levels: 5,
+        levelScale: 0.85,
+        labelScale: 0.9,
+        facetPaddingScale: 2.1,
+        showLevels: true,
+        showLevelsLabels: false,
+        showAxesLabels: true,
+        showAxes: true,
+        showLegend: true,
+        showVertices: true,
+        showPolygons: true
+      };
+    }
+
+    // function getData
+    function getData($fileContent) {
+      ctrl.csv = $fileContent;
+    }
+
+    // function selectExample
+    function selectExample(item) {
+      var file = item + ".csv";
+      $http.get(file).success(function(data) {
+        ctrl.csv = data;
+      });
+    }
+  }
+
+  // directive function sunburst
+  function radar() {
+    return {
+      restrict: "E",
+      scope: {
+        csv: "=",
+        config: "="
+      },
+      link: radarDraw
+    };
+  }
+
+
+  // directive function onReadFile
+  function onReadFile($parse) {
+    return {
+      restrict: "A",
+      scope: false,
+      link: function(scope, element, attrs) {
+        var fn = $parse(attrs.onReadFile);
+        element.on("change", function(onChangeEvent) {
+          var reader = new FileReader();
+          reader.onload = function(onLoadEvent) {
+            scope.$apply(function() {
+              fn(scope, {
+                $fileContent: onLoadEvent.target.result
+              });
+            });
+          };
+          reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+        });
+      }
+    };
+  }
+})();
+
+/** RadarChart
+ *
+ * This is the main reuseable function to draw radar charts.
+ *
+ * The original d3 project is found on: https://github.com/alangrafu/radar-chart-d3
+ * This version is based on the cleaned version found on: http://bl.ocks.org/nbremer/6506614
+ * with some reorganization of code and added commenting, as well as further function abstractions
+ * to allow for addition/removal of visualization components via tweaking configuration parameters.
+ *
+ **/
+
+
+
+
+
+var RadarChart = {
+  draw: function(id, data, options) {
+
+    // add touch to mouseover and mouseout
+    var over = "ontouchstart" in window ? "touchstart" : "mouseover";
+    var out = "ontouchstart" in window ? "touchend" : "mouseout";
+
+    /** Initiate default configuration parameters and vis object
+     *
+     **/
+    // initiate default config
+    var w = 300;
+    var h = 300;
+    var config = {
+      w: w,
+      h: h,
+      facet: false,
+      levels: 5,
+      levelScale: 0.85,
+      labelScale: 1.0,
+      facetPaddingScale: 2.5,
+      maxValue: 5.0,
+      radians: 2 * Math.PI,
+      polygonAreaOpacity: 0.3,
+      polygonStrokeOpacity: 1,
+      polygonPointSize: 4,
+      legendBoxSize: 10,
+      translateX: w / 4,
+      translateY: h / 4,
+      paddingX: w,
+      paddingY: h,
+      colors: d3.scale.category20(),
+      showLevels: true,
+      showLevelsLabels: true,
+      showAxesLabels: true,
+      showAxes: true,
+      showLegend: true,
+      showVertices: true,
+      showPolygons: true
+    };
+
+    // initiate main vis component
+    var vis = {
+      svg: null,
+      tooltip: null,
+      levels: null,
+      axis: null,
+      vertices: null,
+      legend: null,
+      allAxis: null,
+      total: null,
+      radius: null
+    };
+
+    // feed user configuration options
+    if ("undefined" !== typeof options) {
+      for (var i in options) {
+        if ("undefined" !== typeof options[i]) {
+          config[i] = options[i];
+        }
+      }
+    }
+
+    render(data); // render the visualization
+
+
+
+
+
+    /** helper functions
+     *
+     * @function: render: render the visualization
+     * @function: updateConfig: update configuration parameters
+     * @function: buildVis: build visualization using the other build helper functions
+     * @function: buildVisComponents: build main vis components
+     * @function: buildLevels: build "spiderweb" levels
+     * @function: buildLevelsLabels: build out the levels labels
+     * @function: buildAxes: builds out the axes
+     * @function: buildAxesLabels: builds out the axes labels
+     * @function: buildCoordinates: builds [x, y] coordinates of polygon vertices.
+     * @function: buildPolygons: builds out the polygon areas of the dataset
+     * @function: buildVertices: builds out the polygon vertices of the dataset
+     * @function: buildLegend:  builds out the legend
+     **/
+    // render the visualization
+    function render(data) {
+      // remove existing svg if exists
+      d3.select(id).selectAll("svg").remove();
+      updateConfig();
+
+      if (config.facet) {
+        data.forEach(function(d, i) {
+          buildVis([d]); // build svg for each data group
+
+          // override colors
+          vis.svg.selectAll(".polygon-areas")
+            .attr("stroke", config.colors(i))
+            .attr("fill", config.colors(i));
+          vis.svg.selectAll(".polygon-vertices")
+            .attr("fill", config.colors(i));
+          vis.svg.selectAll(".legend-tiles")
+            .attr("fill", config.colors(i));
+        });
+      } else {
+        buildVis(data); // build svg
+      }
+    }
+
+
+    // update configuration parameters
+    function updateConfig() {
+      // adjust config parameters
+      config.maxValue = Math.max(config.maxValue, d3.max(data, function(d) {
+        return d3.max(d.axes, function(o) { return o.value; });
+      }));
+      config.w *= config.levelScale;
+      config.h *= config.levelScale;
+      config.paddingX = config.w * config.levelScale;
+      config.paddingY = config.h * config.levelScale;
+
+
+      // if facet required:
+      if (config.facet) {
+        config.w /= data.length;
+        config.h /= data.length;
+        config.paddingX /= (data.length / config.facetPaddingScale);
+        config.paddingY /= (data.length / config.facetPaddingScale);
+        config.polygonPointSize *= Math.pow(0.9, data.length);
+      }
+    }
+
+
+    //build visualization using the other build helper functions
+    function buildVis(data) {
+      buildVisComponents();
+      buildCoordinates(data);
+      if (config.showLevels) buildLevels();
+      if (config.showLevelsLabels) buildLevelsLabels();
+      if (config.showAxes) buildAxes();
+      if (config.showAxesLabels) buildAxesLabels();
+      if (config.showLegend) buildLegend(data);
+      if (config.showVertices) buildVertices(data);
+      if (config.showPolygons) buildPolygons(data);
+    }
+
+    // build main vis components
+    function buildVisComponents() {
+      // update vis parameters
+      vis.allAxis = data[0].axes.map(function(i, j) { return i.axis; });
+      vis.totalAxes = vis.allAxis.length;
+      vis.radius = Math.min(config.w / 2, config.h / 2);
+
+      // create main vis svg
+      vis.svg = d3.select(id)
+        .append("svg").classed("svg-vis", true)
+        .attr("width", config.w + config.paddingX)
+        .attr("height", config.h + config.paddingY)
+        .append("svg:g")
+        .attr("transform", "translate(" + config.translateX + "," + config.translateY + ")");;
+
+      // create verticesTooltip
+      vis.verticesTooltip = d3.select("body")
+        .append("div").classed("verticesTooltip", true)
+        .attr("opacity", 0)
+        .style({
+          "position": "absolute",
+          "color": "black",
+          "font-size": "10px",
+          "width": "100px",
+          "height": "auto",
+          "padding": "5px",
+          "border": "2px solid gray",
+          "border-radius": "5px",
+          "pointer-events": "none",
+          "opacity": "0",
+          "background": "#f4f4f4"
+        });
+
+
+      // create levels
+      vis.levels = vis.svg.selectAll(".levels")
+        .append("svg:g").classed("levels", true);
+
+      // create axes
+      vis.axes = vis.svg.selectAll(".axes")
+        .append("svg:g").classed("axes", true);
+
+      // create vertices
+      vis.vertices = vis.svg.selectAll(".vertices");
+
+      //Initiate Legend
+      vis.legend = vis.svg.append("svg:g").classed("legend", true)
+        .attr("height", config.h / 2)
+        .attr("width", config.w / 2)
+        .attr("transform", "translate(" + 0 + ", " + 1.1 * config.h + ")");
+    }
+
+
+    // builds out the levels of the spiderweb
+    function buildLevels() {
+      for (var level = 0; level < config.levels; level++) {
+        var levelFactor = vis.radius * ((level + 1) / config.levels);
+
+        // build level-lines
+        vis.levels
+          .data(vis.allAxis).enter()
+          .append("svg:line").classed("level-lines", true)
+          .attr("x1", function(d, i) { return levelFactor * (1 - Math.sin(i * config.radians / vis.totalAxes)); })
+          .attr("y1", function(d, i) { return levelFactor * (1 - Math.cos(i * config.radians / vis.totalAxes)); })
+          .attr("x2", function(d, i) { return levelFactor * (1 - Math.sin((i + 1) * config.radians / vis.totalAxes)); })
+          .attr("y2", function(d, i) { return levelFactor * (1 - Math.cos((i + 1) * config.radians / vis.totalAxes)); })
+          .attr("transform", "translate(" + (config.w / 2 - levelFactor) + ", " + (config.h / 2 - levelFactor) + ")")
+          .attr("stroke", "gray")
+          .attr("stroke-width", "0.5px");
+      }
+    }
+
+
+    // builds out the levels labels
+    function buildLevelsLabels() {
+      for (var level = 0; level < config.levels; level++) {
+        var levelFactor = vis.radius * ((level + 1) / config.levels);
+
+        // build level-labels
+        vis.levels
+          .data([1]).enter()
+          .append("svg:text").classed("level-labels", true)
+          .text((config.maxValue * (level + 1) / config.levels).toFixed(2))
+          .attr("x", function(d) { return levelFactor * (1 - Math.sin(0)); })
+          .attr("y", function(d) { return levelFactor * (1 - Math.cos(0)); })
+          .attr("transform", "translate(" + (config.w / 2 - levelFactor + 5) + ", " + (config.h / 2 - levelFactor) + ")")
+          .attr("fill", "gray")
+          .attr("font-family", "sans-serif")
+          .attr("font-size", 10 * config.labelScale + "px");
+      }
+    }
+
+
+    // builds out the axes
+    function buildAxes() {
+      vis.axes
+        .data(vis.allAxis).enter()
+        .append("svg:line").classed("axis-lines", true)
+        .attr("x1", config.w / 2)
+        .attr("y1", config.h / 2)
+        .attr("x2", function(d, i) { return config.w / 2 * (1 - Math.sin(i * config.radians / vis.totalAxes)); })
+        .attr("y2", function(d, i) { return config.h / 2 * (1 - Math.cos(i * config.radians / vis.totalAxes)); })
+        .attr("stroke", "grey")
+        .attr("stroke-width", "1px");
+    }
+
+
+    // builds out the axes labels
+    function buildAxesLabels() {
+      vis.axes
+        .data(vis.allAxis).enter()
+        .append("svg:text").classed("axis-labels", true)
+        .text(function(d) { return d; })
+        .attr("text-anchor", "middle")
+        .attr("x", function(d, i) { return config.w / 2 * (1 - 1.3 * Math.sin(i * config.radians / vis.totalAxes)); })
+        .attr("y", function(d, i) { return config.h / 2 * (1 - 1.1 * Math.cos(i * config.radians / vis.totalAxes)); })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 11 * config.labelScale + "px");
+    }
+
+
+    // builds [x, y] coordinates of polygon vertices.
+    function buildCoordinates(data) {
+      data.forEach(function(group) {
+        group.axes.forEach(function(d, i) {
+          d.coordinates = { // [x, y] coordinates
+            x: config.w / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / config.maxValue) * Math.sin(i * config.radians / vis.totalAxes)),
+            y: config.h / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / config.maxValue) * Math.cos(i * config.radians / vis.totalAxes))
+          };
+        });
+      });
+    }
+
+
+    // builds out the polygon vertices of the dataset
+    function buildVertices(data) {
+      data.forEach(function(group, g) {
+        vis.vertices
+          .data(group.axes).enter()
+          .append("svg:circle").classed("polygon-vertices", true)
+          .attr("r", config.polygonPointSize)
+          .attr("cx", function(d, i) { return d.coordinates.x; })
+          .attr("cy", function(d, i) { return d.coordinates.y; })
+          .attr("fill", config.colors(g))
+          .on(over, verticesTooltipShow)
+          .on(out, verticesTooltipHide);
+      });
+    }
+
+
+    // builds out the polygon areas of the dataset
+    function buildPolygons(data) {
+      vis.vertices
+        .data(data).enter()
+        .append("svg:polygon").classed("polygon-areas", true)
+        .attr("points", function(group) { // build verticesString for each group
+          var verticesString = "";
+          group.axes.forEach(function(d) { verticesString += d.coordinates.x + "," + d.coordinates.y + " "; });
+          return verticesString;
+        })
+        .attr("stroke-width", "2px")
+        .attr("stroke", function(d, i) { return config.colors(i); })
+        .attr("fill", function(d, i) { return config.colors(i); })
+        .attr("fill-opacity", config.polygonAreaOpacity)
+        .attr("stroke-opacity", config.polygonStrokeOpacity)
+        .on(over, function(d) {
+          vis.svg.selectAll(".polygon-areas") // fade all other polygons out
+          .transition(250)
+            .attr("fill-opacity", 0.1)
+            .attr("stroke-opacity", 0.1);
+          d3.select(this) // focus on active polygon
+          .transition(250)
+            .attr("fill-opacity", 0.7)
+            .attr("stroke-opacity", config.polygonStrokeOpacity);
+        })
+        .on(out, function() {
+          d3.selectAll(".polygon-areas")
+            .transition(250)
+            .attr("fill-opacity", config.polygonAreaOpacity)
+            .attr("stroke-opacity", 1);
+        });
+    }
+
+
+    // builds out the legend
+    function buildLegend(data) {
+      //Create legend squares
+      vis.legend.selectAll(".legend-tiles")
+        .data(data).enter()
+        .append("svg:rect").classed("legend-tiles", true)
+        .attr("x", config.w - config.paddingX / 2)
+        .attr("y", function(d, i) { return i * 2 * config.legendBoxSize; })
+        .attr("width", config.legendBoxSize)
+        .attr("height", config.legendBoxSize)
+        .attr("fill", function(d, g) { return config.colors(g); });
+
+      //Create text next to squares
+      vis.legend.selectAll(".legend-labels")
+        .data(data).enter()
+        .append("svg:text").classed("legend-labels", true)
+        .attr("x", config.w - config.paddingX / 2 + (1.5 * config.legendBoxSize))
+        .attr("y", function(d, i) { return i * 2 * config.legendBoxSize; })
+        .attr("dy", 0.07 * config.legendBoxSize + "em")
+        .attr("font-size", 11 * config.labelScale + "px")
+        .attr("fill", "gray")
+        .text(function(d) {
+          return d.group;
+        });
+    }
+
+
+    // show tooltip of vertices
+    function verticesTooltipShow(d) {
+      vis.verticesTooltip.style("opacity", 0.9)
+        .html("<strong>Score</strong>: " + d.value + "/5")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY) + "px");
+    }
+
+    // hide tooltip of vertices
+    function verticesTooltipHide() {
+      vis.verticesTooltip.style("opacity", 0);
+    }
+  }
+};
+
+function radarDraw(scope, element) {
+  /**
+   * Angular variables
+   *
+   */
+
+  // watch for changes on scope.data
+  scope.$watch("[csv, config]", function() {
+    var csv = scope.csv;
+    var config = scope.config;
+    var data = csv2json(csv);
+    RadarChart.draw(element[0], data, config);  // call the D3 RadarChart.draw function to draw the vis on changes to data or config
+  });
+
+
+  // helper function csv2json to return json data from csv
+  function csv2json(csv) {
+    csv = csv.replace(/, /g, ","); // trim leading whitespace in csv file
+    var json = d3.csv.parse(csv); // parse csv string into json
+    // reshape json data
+    var data = [];
+    var groups = []; // track unique groups
+    json.forEach(function(record) {
+      var group = record.group;
+      if (groups.indexOf(group) < 0) {
+        groups.push(group); // push to unique groups tracking
+        data.push({ // push group node in data
+          group: group,
+          axes: []
+        });
+      };
+      data.forEach(function(d) {
+        if (d.group === record.group) { // push record data into right group in data
+          d.axes.push({
+            axis: record.axis,
+            value: parseInt(record.value),
+            description: record.description
+          });
+        }
+      });
+    });
+    return data;
+  }
+}
+</script>		
+		
+		<h2><font size="6"><b>Recipe for Top Spot</b></font><h2>
+		<div class="row">
+		<div class="column" style="background-color:dimgray;">
+		
+		<p align = "justify"><font size="4">With a low crime rate, few security and terror-related incidents and high levels of social harmony, New Zealand  scores well on this measure, taking the top spot in this region.
+		<br><br>With minimal military, no ongoing conflicts and a peaceful foreign policy, it is no surprise that New Zealand also scored high on these measures for degree of Militarisation.</font></p>
+
+		<!-- Interesting Facts about New Zealand -->
+		<br><br>
+		<div id="interesting-facts" style="background-color: gold;">
+		<h5><b>Interesting Facts about New Zealand</b><h5>
+		<h3><font size="3">New Zealand is very remote, which makes it the ideal place to escape to if war broke out.
+		Being an island surrounded by the sea, it could avoid invasion or attack from other countries.
+		It is also committed to self-sustenance. Half of the country’s electricity comes from hydroelectric power and it has fertile land - which could be useful if it was cut off from the rest of the world.</font></h3>
+		</div>
+		</div>
+		<div class="column" style="background-color:black;">
+		<h4><b>New Zealand's GPI Scores in 2018</b></h4>
+		<img src="Flag_of_New_Zealand.jpg" width="110" height="55">
+		<br><br>
+		<svg id="fillgauge1" width="200" height="200"></svg>
+		<h2>OVERALL SCORE</h2>
+		<h6><font size="2">(Scores are out of 5. The lower the score, the better.)</font></h6>
+		<svg id="fillgauge2" width="120" height="120" style="margin-left:15px; float:left"></svg>
+		<svg id="fillgauge3" width="120" height="120"></svg>
+		<svg id="fillgauge4" width="120" height="120" style="margin-right:15px; float:right"></svg><br>
+		<h2 style="float:left; margin-left:15px;">Militarisation</h2>
+		<h2 style="float:left; margin-left:85px;">Safety and<br> Security</h2>
+		<h2 style="float:right; margin-right:30px;">Ongoing<br> Conflict</h2>
+		
+		<script>
+
+			var gauge1 = loadLiquidFillGauge("fillgauge1", 1.192);
+			var config1 = liquidFillGaugeDefaultSettings();
+			config1.circleThickness = 0.15;
+			config1.circleColor = "#99ffff";
+			config1.textColor = "#99ffff";
+			config1.waveTextColor = "#99ffff";
+			config1.waveColor = "#e6ffff";
+			config1.textVertPosition = 0.8;
+			config1.waveAnimateTime = 1000;
+			config1.waveHeight = 0.05;
+			config1.waveAnimate = true;
+			config1.waveRise = false;
+			config1.waveHeightScaling = false;
+			config1.waveOffset = 0.25;
+			config1.textSize = 0.75;
+			config1.waveCount = 2;
+			var gauge2 = loadLiquidFillGauge("fillgauge2", 1.2, config1);
+			var config2 = liquidFillGaugeDefaultSettings();
+			config2.circleThickness = 0.15;
+			config2.circleColor = "#a3a3c2";
+			config2.textColor = "#a3a3c2";
+			config2.waveTextColor = "#a3a3c2";
+			config2.waveColor = "#e0e0eb";
+			config2.textVertPosition = 0.8;
+			config2.waveAnimateTime = 1000;
+			config2.waveHeight = 0.05;
+			config2.waveAnimate = true;
+			config2.waveRise = false;
+			config2.waveHeightScaling = false;
+			config2.waveOffset = 0.25;
+			config2.textSize = 0.75;
+			config2.waveCount = 2;
+			var gauge3 = loadLiquidFillGauge("fillgauge3", 1.3, config2);
+			var config3 = liquidFillGaugeDefaultSettings();
+			config3.circleThickness = 0.15;
+			config3.circleColor = "#ff8000";
+			config3.textColor = "#ff8000";
+			config3.waveTextColor = "#ff8000";
+			config3.waveColor = "#ffcc99";
+			config3.textVertPosition = 0.8;
+			config3.waveAnimateTime = 1000;
+			config3.waveHeight = 0.05;
+			config3.waveAnimate = true;
+			config3.waveRise = false;
+			config3.waveHeightScaling = false;
+			config3.waveOffset = 0.25;
+			config3.textSize = 0.75;
+			config3.waveCount = 2;
+			var gauge4 = loadLiquidFillGauge("fillgauge4", 1, config3);
+			var config4 = liquidFillGaugeDefaultSettings();
+			
+
+
+			//script for liquidFillGauge
+			/*!
+		 * @license Open source under BSD 2-clause (http://choosealicense.com/licenses/bsd-2-clause/)
+		 * Copyright (c) 2015, Curtis Bratton
+		 * All rights reserved.
+		 *
+		 * Liquid Fill Gauge v1.1
+		 */
+		function liquidFillGaugeDefaultSettings(){
+			return {
+				minValue: 0, // The gauge minimum value.
+				maxValue: 5, // The gauge maximum value.
+				circleThickness: 0.05, // The outer circle thickness as a percentage of it's radius.
+				circleFillGap: 0.05, // The size of the gap between the outer circle and wave circle as a percentage of the outer circles radius.
+				circleColor: "#178BCA", // The color of the outer circle.
+				waveHeight: 0.05, // The wave height as a percentage of the radius of the wave circle.
+				waveCount: 1, // The number of full waves per width of the wave circle.
+				waveRiseTime: 1000, // The amount of time in milliseconds for the wave to rise from 0 to it's final height.
+				waveAnimateTime: 2000, // The amount of time in milliseconds for a full wave to enter the wave circle.
+				waveRise: true, // Control if the wave should rise from 0 to it's full height, or start at it's full height.
+				waveHeightScaling: true, // Controls wave size scaling at low and high fill percentages. When true, wave height reaches it's maximum at 50% fill, and minimum at 0% and 100% fill. This helps to prevent the wave from making the wave circle from appear totally full or empty when near it's minimum or maximum fill.
+				waveAnimate: true, // Controls if the wave scrolls or is static.
+				waveColor: "#178BCA", // The color of the fill wave.
+				waveOffset: 0, // The amount to initially offset the wave. 0 = no offset. 1 = offset of one full wave.
+				textVertPosition: .5, // The height at which to display the percentage text withing the wave circle. 0 = bottom, 1 = top.
+				textSize: 1, // The relative height of the text to display in the wave circle. 1 = 50%
+				valueCountUp: true, // If true, the displayed value counts up from 0 to it's final value upon loading. If false, the final value is displayed.
+				displayPercent: false, // If true, a % symbol is displayed after the value.
+				textColor: "#045681", // The color of the value text when the wave does not overlap it.
+				waveTextColor: "#A4DBf8" // The color of the value text when the wave overlaps it.
+			};
+		}
+
+		function loadLiquidFillGauge(elementId, value, config) {
+			if(config == null) config = liquidFillGaugeDefaultSettings();
+
+			var gauge = d3.select("#" + elementId);
+			var radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height")))/2;
+			var locationX = parseInt(gauge.style("width"))/2 - radius;
+			var locationY = parseInt(gauge.style("height"))/2 - radius;
+			var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value))/config.maxValue;
+
+			var waveHeightScale;
+			if(config.waveHeightScaling){
+				waveHeightScale = d3.scale.linear()
+					.range([0,config.waveHeight,0])
+					.domain([0,50,100]);
+			} else {
+				waveHeightScale = d3.scale.linear()
+					.range([config.waveHeight,config.waveHeight])
+					.domain([0,100]);
+			}
+
+			var textPixels = (config.textSize*radius/2);
+			var textFinalValue = parseFloat(value).toFixed(2);
+			var textStartValue = config.valueCountUp?config.minValue:textFinalValue;
+			var percentText = config.displayPercent?"%":"";
+			var circleThickness = config.circleThickness * radius;
+			var circleFillGap = config.circleFillGap * radius;
+			var fillCircleMargin = circleThickness + circleFillGap;
+			var fillCircleRadius = radius - fillCircleMargin;
+			var waveHeight = fillCircleRadius*waveHeightScale(fillPercent*100);
+
+			var waveLength = fillCircleRadius*2/config.waveCount;
+			var waveClipCount = 1+config.waveCount;
+			var waveClipWidth = waveLength*waveClipCount;
+
+			// Rounding functions so that the correct number of decimal places is always displayed as the value counts up.
+			var textRounder = function(value){ return Math.round(value); };
+			if(parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))){
+				textRounder = function(value){ return parseFloat(value).toFixed(1); };
+			}
+			if(parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))){
+				textRounder = function(value){ return parseFloat(value).toFixed(2); };
+			}
+
+			// Data for building the clip wave area.
+			var data = [];
+			for(var i = 0; i <= 40*waveClipCount; i++){
+				data.push({x: i/(40*waveClipCount), y: (i/(40))});
+			}
+
+			// Scales for drawing the outer circle.
+			var gaugeCircleX = d3.scale.linear().range([0,2*Math.PI]).domain([0,1]);
+			var gaugeCircleY = d3.scale.linear().range([0,radius]).domain([0,radius]);
+
+			// Scales for controlling the size of the clipping path.
+			var waveScaleX = d3.scale.linear().range([0,waveClipWidth]).domain([0,1]);
+			var waveScaleY = d3.scale.linear().range([0,waveHeight]).domain([0,1]);
+
+			// Scales for controlling the position of the clipping path.
+			var waveRiseScale = d3.scale.linear()
+				// The clipping area size is the height of the fill circle + the wave height, so we position the clip wave
+				// such that the it will overlap the fill circle at all when at 0%, and will totally cover the fill
+				// circle at 100%.
+				.range([(fillCircleMargin+fillCircleRadius*2+waveHeight),(fillCircleMargin-waveHeight)])
+				.domain([0,1]);
+			var waveAnimateScale = d3.scale.linear()
+				.range([0, waveClipWidth-fillCircleRadius*2]) // Push the clip area one full wave then snap back.
+				.domain([0,1]);
+
+			// Scale for controlling the position of the text within the gauge.
+			var textRiseScaleY = d3.scale.linear()
+				.range([fillCircleMargin+fillCircleRadius*2,(fillCircleMargin+textPixels*0.7)])
+				.domain([0,1]);
+
+			// Center the gauge within the parent SVG.
+			var gaugeGroup = gauge.append("g")
+				.attr('transform','translate('+locationX+','+locationY+')');
+
+			// Draw the outer circle.
+			var gaugeCircleArc = d3.svg.arc()
+				.startAngle(gaugeCircleX(0))
+				.endAngle(gaugeCircleX(1))
+				.outerRadius(gaugeCircleY(radius))
+				.innerRadius(gaugeCircleY(radius-circleThickness));
+			gaugeGroup.append("path")
+				.attr("d", gaugeCircleArc)
+				.style("fill", config.circleColor)
+				.attr('transform','translate('+radius+','+radius+')');
+
+			// Text where the wave does not overlap.
+			var text1 = gaugeGroup.append("text")
+				.text(textRounder(textStartValue) + percentText)
+				.attr("class", "liquidFillGaugeText")
+				.attr("text-anchor", "middle")
+				.attr("font-size", textPixels + "px")
+				.style("fill", config.textColor)
+				.attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition)+')');
+
+			// The clipping wave area.
+			var clipArea = d3.svg.area()
+				.x(function(d) { return waveScaleX(d.x); } )
+				.y0(function(d) { return waveScaleY(Math.sin(Math.PI*2*config.waveOffset*-1 + Math.PI*2*(1-config.waveCount) + d.y*2*Math.PI));} )
+				.y1(function(d) { return (fillCircleRadius*2 + waveHeight); } );
+			var waveGroup = gaugeGroup.append("defs")
+				.append("clipPath")
+				.attr("id", "clipWave" + elementId);
+			var wave = waveGroup.append("path")
+				.datum(data)
+				.attr("d", clipArea)
+				.attr("T", 0);
+
+			// The inner circle with the clipping wave attached.
+			var fillCircleGroup = gaugeGroup.append("g")
+				.attr("clip-path", "url(#clipWave" + elementId + ")");
+			fillCircleGroup.append("circle")
+				.attr("cx", radius)
+				.attr("cy", radius)
+				.attr("r", fillCircleRadius)
+				.style("fill", config.waveColor);
+
+			// Text where the wave does overlap.
+			var text2 = fillCircleGroup.append("text")
+				.text(textRounder(textStartValue) + percentText)
+				.attr("class", "liquidFillGaugeText")
+				.attr("text-anchor", "middle")
+				.attr("font-size", textPixels + "px")
+				.style("fill", config.waveTextColor)
+				.attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition)+')');
+
+			// Make the value count up.
+			if(config.valueCountUp){
+				var textTween = function(){
+					var i = d3.interpolate(this.textContent, textFinalValue);
+					return function(t) { this.textContent = textRounder(i(t)) + percentText; }
+				};
+				text1.transition()
+					.duration(config.waveRiseTime)
+					.tween("text", textTween);
+				text2.transition()
+					.duration(config.waveRiseTime)
+					.tween("text", textTween);
+			}
+
+			// Make the wave rise. wave and waveGroup are separate so that horizontal and vertical movement can be controlled independently.
+			var waveGroupXPosition = fillCircleMargin+fillCircleRadius*2-waveClipWidth;
+			if(config.waveRise){
+				waveGroup.attr('transform','translate('+waveGroupXPosition+','+waveRiseScale(0)+')')
+					.transition()
+					.duration(config.waveRiseTime)
+					.attr('transform','translate('+waveGroupXPosition+','+waveRiseScale(fillPercent)+')')
+					.each("start", function(){ wave.attr('transform','translate(1,0)'); }); // This transform is necessary to get the clip wave positioned correctly when waveRise=true and waveAnimate=false. The wave will not position correctly without this, but it's not clear why this is actually necessary.
+			} else {
+				waveGroup.attr('transform','translate('+waveGroupXPosition+','+waveRiseScale(fillPercent)+')');
+			}
+
+			if(config.waveAnimate) animateWave();
+
+			function animateWave() {
+				wave.attr('transform','translate('+waveAnimateScale(wave.attr('T'))+',0)');
+				wave.transition()
+					.duration(config.waveAnimateTime * (1-wave.attr('T')))
+					.ease('linear')
+					.attr('transform','translate('+waveAnimateScale(1)+',0)')
+					.attr('T', 1)
+					.each('end', function(){
+						wave.attr('T', 0);
+						animateWave(config.waveAnimateTime);
+					});
+			}
+
+			function GaugeUpdater(){
+				this.update = function(value){
+					var newFinalValue = parseFloat(value).toFixed(2);
+					var textRounderUpdater = function(value){ return Math.round(value); };
+					if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))){
+						textRounderUpdater = function(value){ return parseFloat(value).toFixed(1); };
+					}
+					if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))){
+						textRounderUpdater = function(value){ return parseFloat(value).toFixed(2); };
+					}
+
+					var textTween = function(){
+						var i = d3.interpolate(this.textContent, parseFloat(value).toFixed(2));
+						return function(t) { this.textContent = textRounderUpdater(i(t)) + percentText; }
+					};
+
+					text1.transition()
+						.duration(config.waveRiseTime)
+						.tween("text", textTween);
+					text2.transition()
+						.duration(config.waveRiseTime)
+						.tween("text", textTween);
+
+					var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value))/config.maxValue;
+					var waveHeight = fillCircleRadius*waveHeightScale(fillPercent*100);
+					var waveRiseScale = d3.scale.linear()
+						// The clipping area size is the height of the fill circle + the wave height, so we position the clip wave
+						// such that the it will overlap the fill circle at all when at 0%, and will totally cover the fill
+						// circle at 100%.
+						.range([(fillCircleMargin+fillCircleRadius*2+waveHeight),(fillCircleMargin-waveHeight)])
+						.domain([0,1]);
+					var newHeight = waveRiseScale(fillPercent);
+					var waveScaleX = d3.scale.linear().range([0,waveClipWidth]).domain([0,1]);
+					var waveScaleY = d3.scale.linear().range([0,waveHeight]).domain([0,1]);
+					var newClipArea;
+					if(config.waveHeightScaling){
+						newClipArea = d3.svg.area()
+							.x(function(d) { return waveScaleX(d.x); } )
+							.y0(function(d) { return waveScaleY(Math.sin(Math.PI*2*config.waveOffset*-1 + Math.PI*2*(1-config.waveCount) + d.y*2*Math.PI));} )
+							.y1(function(d) { return (fillCircleRadius*2 + waveHeight); } );
+					} else {
+						newClipArea = clipArea;
+					}
+
+					var newWavePosition = config.waveAnimate?waveAnimateScale(1):0;
+					wave.transition()
+						.duration(0)
+						.transition()
+						.duration(config.waveAnimate?(config.waveAnimateTime * (1-wave.attr('T'))):(config.waveRiseTime))
+						.ease('linear')
+						.attr('d', newClipArea)
+						.attr('transform','translate('+newWavePosition+',0)')
+						.attr('T','1')
+						.each("end", function(){
+							if(config.waveAnimate){
+								wave.attr('transform','translate('+waveAnimateScale(0)+',0)');
+								animateWave(config.waveAnimateTime);
+							}
+						});
+					waveGroup.transition()
+						.duration(config.waveRiseTime)
+						.attr('transform','translate('+waveGroupXPosition+','+newHeight+')')
+				}
+			}
+
+			return new GaugeUpdater();
+		}
+		</script>
+		</div>
+		</div>
+
+			
+<br>
+<br>
+
+		<!-- How did the rest fare? -->
+		<font size="6" color="steelblue"><b>How did the Rest Fare?</b></font><br><br>
+		<font size = "3" color="black">The top five most peaceful countries in Asia Pacific after New Zealand are Singapore, Japan, Australia and Malaysia.
+      North Korea was ranked the least peaceful in Asia Pacific, scoring high in all 3 domains. The other countries which were in the bottom rank are China, Thailand, Myanmar and Philippines.</font><br>
+
+
+	<br><br>
+
+	<!-- Containers for Top 5 and Bottom 5 -->
+	<div id="chartContainer1" style="height: 350px; width: 48%; border: 2px solid #696969; float:left; margin-right: 30px;"></div>
+	<div id="chartContainer2" style="height: 350px; width: 48%; border: 2px solid #000000; float:left;"></div>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+	<script>
+
+	//script for top 5 and bottom 5
+	window.onload = function () {
+	
+	// add codes to set the color
+	CanvasJS.addColorSet("colorPlant",
+                [//colorSet Array
+                "#0080FF",
+                "#99ffff",
+                "darkgray",
+                "#ff8000"               
+                ]);
+	
+	// First chart for Top 5 countries
+	var chart = new CanvasJS.Chart("chartContainer1", {
+		animationEnabled: true,
+		colorSet: "colorPlant",
+		backgroundColor: "#DCDCDC",
+		title:{
+			text: "GPI Scores In Asia-Pacific, 2018 (Top 5)"
+		},
+		axisY: {
+			title: "Overall GPI Score",
+			titleFontColor: "#4F81BC",
+			lineColor: "#4F81BC",
+			labelFontColor: "#4F81BC",
+			tickColor: "#4F81BC"
+		},
+
+		toolTip: {
+			shared: true
+		},
+		legend: {
+			cursor:"pointer",
+			itemclick: toggleDataSeries
+		},
+		data: [{
+			type: "column",
+			name: "Overall GPI Score",
+			legendText: "Overall Score",
+			showInLegend: true,
+			dataPoints:[
+				{ label: "New Zealand", y: 1.192},
+				{ label: "Singapore", y: 1.382 },
+				{ label: "Japan", y: 1.391 },
+				{ label: "Australia", y: 1.435 },
+				{ label: "Malaysia", y: 1.619 }
+			]
+		},
+		{
+			type: "column",
+			name: "Militarisation",
+			legendText: "Militarisation",
+			axisYType: "secondary",
+			showInLegend: true,
+			dataPoints:[
+				{ label: "New Zealand", y: 1.4 },
+				{ label: "Singapore", y: 1.6 },
+				{ label: "Japan", y: 1.4 },
+				{ label: "Australia", y: 1.6 },
+				{ label: "Malaysia", y: 2.3 }
+			]
+		},
+		{
+			type: "column",
+			name: "Safety & Security",
+			legendText: "Safety & Security",
+			axisYType: "Third",
+			showInLegend: true,
+			dataPoints:[
+				{ label: "New Zealand", y: 1.3 },
+				{ label: "Singapore", y: 2.2 },
+				{ label: "Japan", y: 1.4 },
+				{ label: "Australia", y: 1.6 },
+				{ label: "Malaysia", y: 1.4 }
+			]
+		},
+		{
+			type: "column",
+			name: "Ongoing conflict",
+			legendText: "Ongoing conflict",
+			axisYType: "Forth",
+			showInLegend: true,
+			dataPoints:[
+				{ label: "New Zealand", y: 1 },
+				{ label: "Singapore", y: 1 },
+				{ label: "Japan", y: 1.4 },
+				{ label: "Australia", y: 1.1 },
+				{ label: "Malaysia", y: 1.1 }
+			]
+		}
+		]
+	});
+	chart.render();
+	
+	function toggleDataSeries(e) {
+		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		}
+		else {
+			e.dataSeries.visible = true;
+		}
+		chart.render();
+	}
+
+	
+	
+	// Second chart for Last 5 countries
+	var chart = new CanvasJS.Chart("chartContainer2", {
+		animationEnabled: true,
+		colorSet: "colorPlant",
+		backgroundColor: "#DCDCDC",
+		title:{
+			text: "GPI Scores In Asia-Pacific, 2018 (Bottom 5)"
+		},
+		axisY: {
+			title: "Overall GPI Score",
+			titleFontColor: "#4F81BC",
+			lineColor: "#4F81BC",
+			labelFontColor: "#4F81BC",
+			tickColor: "#4F81BC"
+		},
+
+		toolTip: {
+			shared: true
+		},
+		legend: {
+			cursor:"pointer",
+			itemclick: toggleDataSeries
+		},
+		data: [{
+			type: "column",
+			name: "Overall GPI Score",
+			legendText: "Overall Score",
+			showInLegend: true,
+			dataPoints:[
+				{ label: "China", y: 2.243},
+				{ label: "Thailand", y: 2.259 },
+				{ label: "Myanmar", y: 2.302 },
+				{ label: "Philippines", y: 2.512 },
+				{ label: "North Korea", y: 2.95 }
+			]
+		},
+		{
+			type: "column",
+			name: "Militarisation",
+			legendText: "Militarisation",
+			axisYType: "secondary",
+			showInLegend: true,
+			dataPoints:[
+				{ label: "China", y: 2.5},
+				{ label: "Thailand", y: 2.9 },
+				{ label: "Myanmar", y: 2.4 },
+				{ label: "Philippines", y: 3 },
+				{ label: "North Korea", y: 3.1 }
+			]
+		},
+		{
+			type: "column",
+			name: "Safety & Security",
+			legendText: "Safety & Security",
+			axisYType: "Third",
+			showInLegend: true,
+			dataPoints:[
+				{ label: "China", y: 2},
+				{ label: "Thailand", y: 1.5 },
+				{ label: "Myanmar", y: 1.7 },
+				{ label: "Philippines", y: 1.6 },
+				{ label: "North Korea", y: 3.2 }
+			]
+		},
+		{
+			type: "column",
+			name: "Ongoing conflict",
+			legendText: "Ongoing conflict",
+			axisYType: "Forth",
+			showInLegend: true,
+			dataPoints:[
+				{ label: "China", y: 1.9},
+				{ label: "Thailand", y: 2.1 },
+				{ label: "Myanmar", y: 2.4 },
+				{ label: "Philippines", y: 2.8 },
+				{ label: "North Korea", y: 2.6 }
+			]
+		}
+		]
+	});
+	chart.render();
+
+/*
+	function toggleDataSeries(e) {
+		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		}
+		else {
+			e.dataSeries.visible = true;
+		}
+		chart.render();
+	}
+*/
+	}
+	</script>
+
+
+</body>
+
+</html>
